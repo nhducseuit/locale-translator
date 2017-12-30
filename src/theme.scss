@@ -1,0 +1,7 @@
+@import '~@angular/material/_theming.scss';
+@import 'app/shared/components/file-upload/file-upload.component.scss';
+@include mat-core();
+
+$theme: mat-light-theme(mat-palette($mat-blue), mat-palette($mat-orange));
+@include angular-material-theme($theme);
+@include file-upload-theme($theme);
