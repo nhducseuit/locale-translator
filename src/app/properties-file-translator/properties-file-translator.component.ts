@@ -212,9 +212,9 @@ export class PropertiesFileTranslatorComponent implements OnInit, AfterViewInit 
     if (this.translatedTexts) {
       const lines: string[] = this.translatedTexts.map((entity: TranslationEntity) => {
         if (entity.needTranslation) {
-          return `${entity.key}=${entity.translated.get(targetLocale)}`;
+          return `${entity.key}=${entity.translated.get(targetLocale)}\r\n`;
         } else {
-          return entity.originLine;
+          return `${entity.originLine}\r\n`;
         }
       });
       return new Blob(lines, {type: 'text/plain'});
