@@ -1,3 +1,4 @@
+import { TranslationEntity } from './../../models/translation-entity';
 import { Observable } from 'rxjs/Observable';
 import { Component, OnInit, EventEmitter, Output, AfterViewInit, ViewChild, ElementRef, Input } from '@angular/core';
 import 'rxjs/add/observable/of';
@@ -10,8 +11,8 @@ import 'rxjs/add/observable/of';
 export class FileUploadComponent implements OnInit, AfterViewInit {
   @Output() fileRead: EventEmitter<any> = new EventEmitter<any>();
   @Output() disabledOverlayClicked: EventEmitter<any> = new EventEmitter<any>();
-  @Input() greeting: string;
-  private fileContent: Map<string, string>;
+  public greeting = 'Properties file wanted. Drag or click to open.';
+  private fileContent: TranslationEntity[];
   private fileReader: FileReader;
   public disabled = true;
   @ViewChild('fileUploadComponent') fileUploadComponent: ElementRef;
@@ -19,7 +20,7 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
   constructor() { }
   
   ngOnInit() {
-    this.fileContent = new Map<string, string>();
+    this.fileContent = new Array<TranslationEntity>();
     this.fileReader = new FileReader();
     this.fileReader.onloadend = e => this.readFile();
   }
@@ -28,7 +29,6 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
     console.log(this.fileUploadComponent);
   }
   public openFile(event) {
-    console.log('Input file change');
     const file: File = event.target.files[0];
     this.fileReader.readAsText(file);
   }
@@ -40,20 +40,23 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
     const lineRegex = /^.*$/gm;
     const commentRegex = /^\#.*$/;
     let m;
+    let i = 0;
     while (m = lineRegex.exec(this.fileReader.result)) {
       const line: string = m[0];
+      let transEnt: TranslationEntity = {index: i, originLine: line, needTranslation: true};
       if(commentRegex.test(line))
       {
-        continue;
+        transEnt.needTranslation = false;
       }
-      const fragments = line.split('=');
-      this.fileContent.set(fragments[0], fragments[1]);
+      // const fragments = line.split('=');
+      // this.fileContent.set(fragments[0], fragments[1]);
+      this.fileContent.push(transEnt);
     }
     this.fileRead.emit(this.fileContent);
   }
 
   private clearReadContent(): void {
-    this.fileContent.clear();
+    this.fileContent = [];
   }
 
   public draggingFieldClicked(): void {
@@ -61,7 +64,6 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
   }
 
   public drop(event: DragEvent): void {
-    console.log('Drop event', event);
     event.preventDefault();
     const dt = event.dataTransfer;
     if (dt.items) {
@@ -94,7 +96,6 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
     // Somehow, the component is disabled
     // Clicking into overlay layer will trigger this event
     // which open a path for user to enable the component again.
-    console.log('DIsabled Overlay Clicked');
     this.disabledOverlayClicked.emit();
   }
 }

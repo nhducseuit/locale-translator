@@ -1,0 +1,9 @@
+@mixin properties-file-translator-theme($theme) {
+    .translator-container {
+
+        .mat-progress-bar {
+            margin-top: 1rem;
+            width: 100%;
+        }
+    }
+}

@@ -1,4 +1,19 @@
-<dnh-file-upload #fileUploadCmp 
-  (disabledOverlayClicked)="disabledOverlayClicked()" 
-  (fileRead)="fileRead($event)"
-  [greeting]="'Properties file wanted. Drag or click to open.'"></dnh-file-upload>
+<div class="translator-container">
+  <dnh-file-upload #fileUploadCmp 
+    (disabledOverlayClicked)="disabledOverlayClicked()" 
+    (fileRead)="fileRead($event)">
+  </dnh-file-upload>
+  <mat-progress-bar mode="indeterminate" *ngIf="shouldShowProgressBar"></mat-progress-bar>
+  <div class="tool-bar" *ngIf="supportedLanguages.length > 0 && readTexts">
+    <mat-form-field floatPlaceholder="never">
+      <mat-select #selectTargetLocale [placeholder]="'Translate to'" [(value)]="targetLanguageCode">
+        <mat-option *ngFor="let language of supportedLanguages" [value]="language.language">
+          {{language.name || language.language}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-button color="accent" (click)="translate()" *ngIf="!translated">Translate</button>
+    <button mat-button color="accent" (click)="saveTranslated()" *ngIf="translated">Save Translated</button>
+    <button mat-button *ngIf="translated" (click)="viewTranslated()">View translated</button>
+  </div>
+</div>

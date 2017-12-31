@@ -1,5 +1,5 @@
 import { FileUploadComponent } from './components/file-upload/file-upload.component';
-import { MatButtonModule, MatFormFieldModule, MatInputModule, MatProgressBarModule } from '@angular/material';
+import { MatButtonModule, MatFormFieldModule, MatInputModule, MatProgressBarModule, MatSelectModule } from '@angular/material';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateCloudService } from './services/translate-cloud.service';
 import { LocalStorageService } from './services/local-storage.service';
@@ -14,12 +14,19 @@ import { CommonModule } from '@angular/common';
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
+    MatSelectModule,
   ],
   declarations: [
     FileUploadComponent,
   ],
   exports:[
     FileUploadComponent,
+    HttpClientModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatProgressBarModule,
+    MatSelectModule,
   ],
   providers: [
     LocalStorageService,
