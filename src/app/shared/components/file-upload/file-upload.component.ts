@@ -26,7 +26,7 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
   }
   
   ngAfterViewInit(): void {
-    console.log(this.fileUploadComponent);
+    
   }
   public openFile(event) {
     const file: File = event.target.files[0];
