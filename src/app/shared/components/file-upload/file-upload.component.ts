@@ -37,19 +37,19 @@ export class FileUploadComponent implements OnInit, AfterViewInit {
     /** Clear previous read content */
     this.clearReadContent();
     /** result is content of file as text read by fileReader */
-    const lineRegex = /^.*$/gm;
     const commentRegex = /^\#.*$/;
-    let m;
-    let i = 0;
-    while (m = lineRegex.exec(this.fileReader.result)) {
-      const line: string = m[0];
+    const blankLineRegex = /^\s*$/;
+    const lines: string[] = this.fileReader.result.split('\n');
+    if (!lines) {
+      throw('Error reading file');
+    }
+    for (let i = 0; i < lines.length; i++) {
+      const line: string = lines[i];
       let transEnt: TranslationEntity = {index: i, originLine: line, needTranslation: true};
-      if(commentRegex.test(line))
+      if(commentRegex.test(line) || blankLineRegex.test(line))
       {
         transEnt.needTranslation = false;
       }
-      // const fragments = line.split('=');
-      // this.fileContent.set(fragments[0], fragments[1]);
       this.fileContent.push(transEnt);
     }
     this.fileRead.emit(this.fileContent);
