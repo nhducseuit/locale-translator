@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'fileUpload',
-    loadChildren: 'app/properties-file-translator.module#PropertiesFileTranslatorModule'
+    loadChildren: 'app/properties-file-translator/properties-file-translator.module#PropertiesFileTranslatorModule'
   }
 ];
 
