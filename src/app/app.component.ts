@@ -1,5 +1,6 @@
 import { MatButtonModule } from '@angular/material';
 import { Component, OnInit } from '@angular/core';
+import { IconRegistryService } from './shared/services/icon-registry.service';
 
 @Component({
   selector: 'loc-trans-root',
@@ -8,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor() { }
+  constructor(iconService: IconRegistryService) { }
   
   ngOnInit(): void {
     // Prevent browser default drag&drop behavior

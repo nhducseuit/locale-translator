@@ -48,7 +48,12 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="translatedValue">
       <mat-header-cell *matHeaderCellDef> Translate value ({{targetLanguageName}}) </mat-header-cell>
-      <mat-cell *matCellDef="let message"> {{message.translated?.get(targetLanguageCode)}} </mat-cell>
+      <mat-cell *matCellDef="let message" class="translated-cell">
+        <div *ngIf="selectedPreviewEntryKey !== message.key">{{message.translated?.get(targetLanguageCode)}}</div>
+        <input *ngIf="(selectedPreviewEntryKey === message.key) && isEdited" matInput
+          [value]="message.translated?.get(targetLanguageCode)" />
+        <mat-icon svgIcon="edit"></mat-icon>
+      </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

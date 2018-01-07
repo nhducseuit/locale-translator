@@ -31,7 +31,8 @@ export class PropertiesFileTranslatorComponent implements OnInit, AfterViewInit 
   private translationEntities: Array<TranslationEntity>;
   public dataSource: MatTableDataSource<TranslationEntity>;
   public displayedColumns = ['key', 'originalValue', 'translatedValue'];
-
+  public isEdited = false;
+  public selectedPreviewEntryKey;
   constructor(private translateSvc: TranslateCloudService, private localStorage: LocalStorageService) { }
   
   ngOnInit() {

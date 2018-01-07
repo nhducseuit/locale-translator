@@ -6,21 +6,65 @@
             width: 100%;
         }
     }
+}
 
+@mixin view-translated-theme($theme) {
+    $background: map-get($theme, background );
+    $primary : map-get($theme, primary);
     .view-translated-container {
+        display: -ms-flexbox;
+        display: -webkit-flex;
         display: flex;
+        -webkit-flex-direction: column;
+        -ms-flex-direction: column;
         flex-direction: column;
         max-height: 500px;
         min-width: 300px;
-    }
     
-    .mat-table {
-    overflow: auto;
-    max-height: 500px;
+        .mat-table {
+            overflow: auto;
+            max-height: 500px;
+            .mat-row {
+                &:hover {
+                    background-color: mat-color($background, background);
+                    .mat-cell {
+                        &.translated-cell {
+                            .mat-icon {
+                                display: initial;
+                            }
+                        }
+                    }
+                }
+                .mat-cell {
+                    &.translated-cell {
+                        -webkit-align-self: stretch;
+                        -ms-flex-item-align: stretch;
+                        align-self: stretch;
+                        position: relative;
+                        display: -ms-flexbox;
+                        display: -webkit-flex;
+                        display: flex;
+                        -webkit-align-items: center;
+                        -ms-flex-align: center;
+                        align-items: center;
+                        .mat-icon {
+                            position: absolute;
+                            top: 0;
+                            right: 0;
+                            height: 1rem;
+                            fill: mat-color($primary);
+                            display: none;
+                        }
+                    }
+                }
+            }
+        }
+
+        .mat-form-field {
+            font-size: 14px;
+            width: 100%;
+        }
+        
     }
 
-    .mat-form-field {
-    font-size: 14px;
-    width: 100%;
-    }
 }

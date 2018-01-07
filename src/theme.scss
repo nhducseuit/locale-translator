@@ -1,9 +1,12 @@
 @import '~@angular/material/_theming.scss';
 @import 'app/shared/components/file-upload/file-upload.component.scss';
 @import 'app/hien-s-template/hien-s-template.component.scss';
+@import 'app/properties-file-translator/properties-file-translator.component.scss';
 @include mat-core();
 
 $theme: mat-light-theme(mat-palette($mat-blue), mat-palette($mat-orange));
 @include angular-material-theme($theme);
 @include file-upload-theme($theme);
 @include hien-s-template-theme();
+@include properties-file-translator-theme($theme);
+@include view-translated-theme($theme);
