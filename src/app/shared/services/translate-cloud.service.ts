@@ -1,4 +1,3 @@
-import { MatProgressBarModule } from '@angular/material';
 import { GetSupportedLanguagesResponseLanguage } from './../models/get-supported-languages-response-language';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';

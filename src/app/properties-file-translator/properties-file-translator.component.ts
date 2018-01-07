@@ -8,6 +8,7 @@ import { LocalStorageService } from '../shared/services/local-storage.service';
 import 'rxjs/add/operator/catch';
 import { transformMenu } from '@angular/material/menu/typings/menu-animations';
 import { saveAs } from 'file-saver/FileSaver';
+import { MatTableDataSource } from '@angular/material';
 
 const GGLE_AUTH_ENDPOINT = 'https://accounts.google.com/o/oauth2/v2/auth';
 const OAUTH2_TOKEN_INFO_ENDPOINT = 'https://www.googleapis.com/oauth2/v3/tokeninfo';
@@ -26,7 +27,11 @@ export class PropertiesFileTranslatorComponent implements OnInit, AfterViewInit 
   public translated = false;
   public supportedLanguages: GetSupportedLanguagesResponseLanguage[] = [];
   public targetLanguageCode: string;
+  public targetLanguageName: string;
   private translationEntities: Array<TranslationEntity>;
+  public dataSource: MatTableDataSource<TranslationEntity>;
+  public displayedColumns = ['key', 'originalValue', 'translatedValue'];
+
   constructor(private translateSvc: TranslateCloudService, private localStorage: LocalStorageService) { }
   
   ngOnInit() {
@@ -160,6 +165,8 @@ export class PropertiesFileTranslatorComponent implements OnInit, AfterViewInit 
 
   public translate() {
     if (this.targetLanguageCode) {
+      // TODO cache the selected target language name before continue
+      this.saveSelectedTargetLanguageName(this.targetLanguageCode);
       const texts = this.translationEntities.map(entity => entity.value);
       this.translateSvc.translateMulti(texts, this.targetLanguageCode)
         .subscribe((translatedTexts: string[]) => {
@@ -173,6 +180,8 @@ export class PropertiesFileTranslatorComponent implements OnInit, AfterViewInit 
           // Translation finished, set translated flag to true and prepare the translatedTexts ready to show user or save to file
           this.translated = true;
           this.prepareTranslatedTexts();
+          // TODO use ngrx actions instead
+          this.prepareDataSource();
         },
         err => console.error(err));
     }
@@ -221,5 +230,24 @@ export class PropertiesFileTranslatorComponent implements OnInit, AfterViewInit 
     } else {
       throw('No source texts to build file!');
     }
+  }
+
+  private prepareDataSource(): void {
+    if (this.translated) {
+      this.dataSource = new MatTableDataSource(this.translatedTexts.filter(ent => ent.needTranslation));
+    }
+  }
+
+  private saveSelectedTargetLanguageName(code: string): void {
+    if (code) {
+      const lang = this.supportedLanguages.find(v => v.language === code);
+      this.targetLanguageName = lang && lang.name;
+    }
+  }
+
+  public applyFilter(filterValue: string): void {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
 }

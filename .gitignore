@@ -43,3 +43,8 @@ Thumbs.db
 
 # Mock data test
 /data
+
+# Firebase config
+.firebaserc
+firebase.json
+

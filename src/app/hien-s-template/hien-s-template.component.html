@@ -1,0 +1,25 @@
+<div class="site-comments-bundle-container" *ngFor="let siteComment of commentBundle">
+  <header> 
+    <h2>{{ siteComment[0] }}</h2>
+  </header>
+  <div class="product-comments-bundle-container" *ngFor="let productComment of siteComment[1]">
+    <div class="product-info">
+      <a href="productComment.product.url">{{productComment.product.name}}</a> . 
+      <div class="seller-info">Bán bởi 
+        <span>{{productComment.product.seller}}</span>
+      </div>
+    </div>
+    <div class="comment-container" *ngFor="let comment of productComment.comments">
+      <img [src]="comment.userAvatarUrl ? comment.userAvatarUrl : 'assets/images/a_avatar.jpg'"/>
+      <div class="comment-content">
+        <div class="comment-metadata">
+          Bởi <strong> {{comment.userName}} </strong> 
+          <span>{{comment.time}}</span>
+        </div>
+        <span class="comment-text">
+          {{comment.comment}}
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,75 @@
+@mixin hien-s-template-theme() {
+    .site-comments-bundle-container {
+        font-family: Helvetica, Arial, sans-serif;
+        color: #90949c;
+        height: 100%;
+        width: auto;
+        header {
+            width: 100%;
+            border-bottom: 2px dashed darkcyan;
+            h2 {
+                font-size: 1.5rem;
+                color: darkcyan;
+                margin: 0.5rem 0;
+            }
+        }
+        .product-comments-bundle-container {
+            padding-left: 3rem;
+            margin-bottom: 1rem;
+            &:last-child {
+                margin-bottom: initial;
+            }
+            .product-info {
+                margin: 0.3rem 0;
+                a {
+                    color: blueviolet;
+                    font-weight: 600;
+                    text-decoration: none;
+                    text-transform: capitalize;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+                .seller-info {
+                    display: inline-block;
+                }
+            }
+            .comment-container {
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                margin-left: 0.5rem;
+                line-height: 1.3;
+                img {
+                    -webkit-flex: 0 1 auto;
+                    -ms-flex: 0 1 auto;
+                    flex: 0 1 auto;
+                    width: 3rem;
+                    height: 3rem;
+                }
+                .comment-content {
+                    -webkit-flex: 1 1 auto;
+                    -ms-flex: 1 1 auto;
+                    flex: 1 1 auto;
+                    padding: 0 0.5rem;
+                    min-height: 3.5rem;
+                    .comment-metadata {
+                        strong {
+                            color: #202020;
+                        }
+                        span {
+                            color: #90949c;
+                        }
+                    }
+                    .comment-text {
+                        color: #202020;
+                    }
+                }
+            }
+        }
+        span {
+            color: #202020;
+            font-weight: 400;
+        }
+    }
+}

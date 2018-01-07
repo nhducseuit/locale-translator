@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: 'fileUpload',
     loadChildren: 'app/properties-file-translator/properties-file-translator.module#PropertiesFileTranslatorModule'
+  },
+  {
+    path: 'template',
+    loadChildren: 'app/hien-s-template/hien-s-template.module#HienSTemplateModule'
   }
 ];
 

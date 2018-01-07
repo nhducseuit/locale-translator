@@ -17,3 +17,41 @@
     <button mat-button *ngIf="translated" (click)="viewTranslated()">View translated</button>
   </div>
 </div>
+<hr *ngIf="translated">
+<div class="view-translated-container mat-elevation-z8" *ngIf="translated">
+  <div class="view-translated-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource">
+
+    <!-- Position Column -->
+    <!-- <ng-container matColumnDef="position">
+      <mat-header-cell *matHeaderCellDef> No. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.position}} </mat-cell>
+    </ng-container> -->
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="key">
+      <mat-header-cell *matHeaderCellDef> Key </mat-header-cell>
+      <mat-cell *matCellDef="let message"> {{message.key}} </mat-cell>
+    </ng-container>
+
+    <!-- Weight Column -->
+    <ng-container matColumnDef="originalValue">
+      <mat-header-cell *matHeaderCellDef> Original value </mat-header-cell>
+      <mat-cell *matCellDef="let message"> {{message.value}} </mat-cell>
+    </ng-container>
+ø
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="translatedValue">
+      <mat-header-cell *matHeaderCellDef> Translate value ({{targetLanguageName}}) </mat-header-cell>
+      <mat-cell *matCellDef="let message"> {{message.translated?.get(targetLanguageCode)}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
